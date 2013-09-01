@@ -1,0 +1,27 @@
+{
+  "name": "16ate",
+  "version": "0.0.1",
+  "description": "A simple intermittant fasting tracker",
+  "main": "index.html",
+  "keywords": [
+    "fast",
+    "health"
+  ],
+  "authors": [
+    "Dion Almaer (@dalmaer)"
+  ],
+  "license": "MIT",
+  "homepage": "http://16ate.com/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.0.0",
+    "moment": "~2.1.0"
+  }
+}

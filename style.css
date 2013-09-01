@@ -1,0 +1,31 @@
+body {
+
+}
+
+#hourmarker {
+  text-align: center;
+}
+
+#message {
+  padding: 40px;
+}
+
+h1 {
+  font-size: 64px;
+}
+
+.green {
+  color: #dff0d8;
+}
+
+.yellow {
+  color: #fcf8e3;
+}
+
+.red {
+  color: #f2dede;
+}
+
+.settings {
+  margin-top: 3em;
+}
