@@ -41,19 +41,30 @@ In the *eating* state the number of hours will change colors:
 - Yellow: you are past the ideal state
 - Red: you are 8 hours past the ideal state (stop eating! ;)
 
-## History
+## Tasks
 
-## So the tasks
-
-[ ] Wire up the button to let you shift between states and show simple results
-[ ] Give you smarter information based on the time
-[ ] Self update based on the time
-[ ] Store the state away in local storage so it is available on reload
-[ ] Store the history as green, yellow, and red markers across the top for the last 7 days
-[ ] Be able to set the time versus just using the time when you hit the button
-[ ] Get to the nearest half an hour
+[x] Wire up the button to let you shift between states and show simple results
+[x] Give you smarter information based on the time (uses moment.js)
+[x] Self update based on the time
+[x] Store the state away in local storage so it is available on reload
+[x] Be able to change the goal amount (done via settings)
+[x] Be able to set the time versus just using the time when you hit the button
+[x] Jump to the nearest hour
+[x] Register 16ate.com
+[ ] Be able to reset the local storage if corrupt
+[ ] Setup 16ate.com to show the code
+[ ] When in a fast state and you are *past* the goal, show a different congrats message
+[ ] Self update in a less brute force manner (not refreshing every minute but tying to the next time it would actually change)
+[ ] Store the history as green, yellow, and red markers across the top for the last 7 days (store the last X days into the data source)
+[ ] Easily set the time (e.g. "6pm" in fasting state means "yesterday at 6pm")
+[ ] Get to the nearest half an hour vs. an hour
 [ ] Change the color of the hours to give you a signal of where you are
-[ ] Be able to change the goal amount
 [ ] Be smarter than just rounding to the nearest hour
 
 ## More info on fasting
+
+TBH
+
+## Branches
+
+TBH
