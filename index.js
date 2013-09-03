@@ -36,8 +36,7 @@ $(document).ready(function() {
 
 		render();
 
-		// show the note, and then turn it off
-		showAlert();
+		showAlert(); // and then fade away in a bit
 	});
 
 	// Handle the settings / debug button
@@ -62,11 +61,26 @@ function idealNumberOfEatingHoursPerDay() {
 	return 24 - state.goal;
 }
 
+// Sneak a peak at state.now to see if in debug mode the notion of "now" is hijacked
+function now() {
+	return state.now || moment();
+}
+
+function stringifyHours(hours) {
+	if (hours == 1) {
+		return hours + " hour";
+	} else if (hours < 0) {
+		return Math.abs(hours) + " hour";
+	} else {
+		return hours + " hours";
+	}
+}
+
 // Given a time, find the nearest half an hour and return that time
 // If the hour has more than 30 minutes, add 30 and then it is save to get
 function nearestHour(time) {
 	// If no time has been passed in, use the current moment
-	if (typeof time !== "object") time = moment();
+	if (typeof time !== "object") time = now();
 
 	if (time.minute() > 30) {
 		time.add(31, 'minutes');
@@ -76,7 +90,7 @@ function nearestHour(time) {
 
 function numberOfFastingHours(time) {
 	// If no time has been passed in, use the current moment
-	if (typeof time !== "object") time = moment();
+	if (typeof time !== "object") time = now();
 
 	return state.lastFastingTime.diff(time, 'hours');
 }
@@ -98,7 +112,7 @@ function renderEatingState() {
 	var idealFastTime = state.time.clone().add(idealNumberOfEatingHoursPerDay(), "hours");
 	var idealHours = idealFastTime.diff(nearestHour(), 'hour');
 
-	$("#hourmarker").html(idealHours + " hours");
+	$("#hourmarker").html(stringifyHours(idealHours));
 	clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
 
 	$("#mode").html("You are eating");
@@ -113,33 +127,39 @@ function renderEatingState() {
 
 function renderFastingState() {
 	// The time that is $GOAL hours from when fasting began
+	// e.g if the goal is 16 hours, and fasting began at 6pm,
+	//     then the time will represent the next day at 10am.
 	var goalEndOfFastTime = state.time.clone().add(state.goal, "hours");
 
-	// The hours from $NOW to the $GOAL time
+	// The number of hours from $NOW to the $GOAL time
+	// e.g. if it is 9am the next day, the difference will be 1
 	var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.diff(nearestHour(), 'hour');
-
-	$("#hourmarker").html(hoursUntilGoalEndOfFastTime + " hours");
 
 	$("#mode").html("You are fasting");
 
-	var hoursUntilNumber = parseInt(hoursUntilGoalEndOfFastTime);
+	clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
 
-	if (!isNaN(hoursUntilNumber)) {
-		clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
-		// Green: you have reached your goal, any additional hours are now gravy!
-		if (hoursUntilNumber < 1) {
-			$("#hourmarker").addClass("green");
+	// if the hours is negative it means you are past your goal!
+	if (hoursUntilGoalEndOfFastTime < 0) {
+		$("#hourmarker").addClass("green");
+		$("#hourmarker").html(stringifyHours(hoursUntilGoalEndOfFastTime));
+		$("#timeleft").html("past your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
+
+	// else there is time left to hit your goal
+	} else {
+		$("#hourmarker").html(stringifyHours(hoursUntilGoalEndOfFastTime));
+
+		// "to hit your $GOAL goal @ $GOALTIME"
+		$("#timeleft").html("to hit your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
+
 		// Yellow: you are within 8 hours of your goal
-		} else if (hoursUntilNumber < idealNumberOfEatingHoursPerDay()) {
+		if (hoursUntilGoalEndOfFastTime < idealNumberOfEatingHoursPerDay()) {
 			$("#hourmarker").addClass("yellow");
 		// Red: you are more than 8 hours out from the goal
 		} else {
 			$("#hourmarker").addClass("red");
 		}
 	}
-
-	// "to hit your $GOAL goal @ $GOALTIME"
-	$("#timeleft").html("to hit your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
 
 	$("#laststatus").html("your last meal was at <strong>" + state.time.format('ha') + "</strong>");
 

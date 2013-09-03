@@ -10,6 +10,23 @@ h1 {
  * Custom ID and classes
  */
 
+#header {
+  position: fixed;
+  width: 100%;
+}
+
+#content {
+  position: relative;
+  top: 80px;
+}
+
+#alert {
+  display: none;
+  margin-bottom: 0;
+  margin-top: 20px;
+  text-align: center;
+}
+
 #hourmarker {
   text-align: center;
 }
@@ -29,16 +46,23 @@ h1 {
   padding-bottom: 10px;
 }
 
+#laststatus strong {
+  color: #eee;
+}
+
 .green {
-  color: #dff0d8;
+  /*color: #dff0d8; light*/
+  color: #449d44;
 }
 
 .yellow {
-  color: #fcf8e3;
+  /*color: #fcf8e3; light*/
+  color: #ec971f;
 }
 
 .red {
-  color: #f2dede;
+  /*color: #f2dede; light*/
+  color: #c9302c;
 }
 
 .settings {
