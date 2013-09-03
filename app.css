@@ -119,6 +119,13 @@ h1 {
 
 .progress {
   position: relative;
-  top: 21px;
+  top: 1px;
+  height: 3px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.progress-bar {
   height: 3px;
 }
