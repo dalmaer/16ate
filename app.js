@@ -64,10 +64,10 @@ function idealNumberOfEatingHoursPerDay() {
 // Sneak a peak at state.now to see if in debug mode the notion of "now" is hijacked
 function now() {
   // Defensive as this is called very early on
-  if ( (state === null) || (!"now" in state) ) {
-    return moment();
-  else {
+  if ( (state !== null) && ("now" in state) ) {
     return state.now;
+  } else {
+    return moment();
   }
 }
 
