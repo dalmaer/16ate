@@ -53,6 +53,11 @@ $(document).ready(function() {
 		render();
 	});
 
+  // If you tap on the header, get rid of the bar
+  $("#header").click(function(e) {
+    hideAddressBar();
+  });
+
 });
 
 // The ideal consuming hours are the inverse of your fasting goal time
