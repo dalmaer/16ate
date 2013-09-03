@@ -110,12 +110,14 @@ function inFast() {
 }
 
 function render() {
-	console.log(Date.now());
+	//console.log(Date.now());
 	if (inFast()) {
 		renderFastingState();
 	} else {
 		renderEatingState();
 	}
+
+  hideAddressBar(); // ah the good ole iOS address bar hack
 }
 
 function renderEatingState() {
@@ -177,7 +179,7 @@ function renderFastingState() {
 }
 
 
-
+// If a fast was just completed, give some info to the user
 function showAlert() {
 	if (!inFast()) {
 		var fastingHours = numberOfFastingHours();
@@ -204,6 +206,13 @@ function showAlert() {
 	}
 }
 
+// Hide the URL address bar on iOS
+// NOTE: not detecting iOS
+function hideAddressBar() {
+  setTimeout(function(){
+    window.scrollTo(0, 1);
+  }, 0);
+}
 
 // Given an element nuke any class from the given class names
 // e.g. clearClasses($("#hourmarker"), ["green", "yellow", "red"])
