@@ -71,6 +71,10 @@ function now() {
   }
 }
 
+// Take a Number of hours and return the correct string to handle a couple of issues:
+// - "2 hours" vs. "1 hour" (plural)
+// - When getting negative hours (getting past the goal for example) convert to positive as the UI will reflect the difference
+//   e.g. -1 => 1 hour past your goal!
 function stringifyHours(hours) {
 	if (hours == 1) {
 		return hours + " hour";
@@ -93,6 +97,7 @@ function nearestHour(time) {
 	return time.clone().startOf("hour");
 }
 
+// Return the number of hours between the last fasting time and the given time
 function numberOfFastingHours(time) {
 	// If no time has been passed in, use the current moment
 	if (typeof time !== "object") time = now();

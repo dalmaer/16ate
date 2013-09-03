@@ -50,6 +50,30 @@ h1 {
   color: #eee;
 }
 
+#logo {
+  position: absolute;
+  float: left;
+  color: #fff;
+  padding-top: 12px;
+}
+
+#logo:hover {
+  text-decoration: none;
+}
+
+#logo:hover span {
+  color: #fff;
+}
+
+#sixteen {
+  font-size: 42px;
+  color: #fff;
+}
+
+#eight {
+  color: rgb(153, 153, 153)
+}
+
 .green {
   /*color: #dff0d8; light*/
   color: #449d44;
@@ -76,6 +100,10 @@ h1 {
 .navbar-brand {
   width: 100%;
   color: white;
+}
+
+.navbar-header {
+  margin-left: 60px;
 }
 
 .navbar {
