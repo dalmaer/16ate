@@ -2,16 +2,31 @@ body {
 
 }
 
+h1 {
+  font-size: 64px;
+}
+
+/*
+ * Custom ID and classes
+ */
+
 #hourmarker {
   text-align: center;
 }
 
 #message {
-  padding: 40px;
+  margin: 0;
+  padding: 10px 40px 40px 40px;
 }
 
-h1 {
-  font-size: 64px;
+#mode {
+  color: #FFF;
+  font-size: 2em;
+}
+
+#laststatus {
+  color: rgb(153, 153, 153);
+  padding-bottom: 10px;
 }
 
 .green {
@@ -28,4 +43,17 @@ h1 {
 
 .settings {
   margin-top: 3em;
+}
+
+/*
+ * Enhance Twitter Bootstrap Classes
+ */
+
+.navbar-brand {
+  width: 100%;
+  color: white;
+}
+
+.navbar {
+  box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2)
 }

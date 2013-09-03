@@ -16,20 +16,28 @@ $(document).ready(function() {
 		saveState();
 	}
 
+	// Render now ...
 	render();
+	// ... and re-render every minute
+	setInterval(render, 1000 * 60);
 
 	// Handle the main button which marks the flip between states
 	$("#eat").click(function(e) {
 		if (inFast()) {
 			state.period = "eating";  // switch to eating
+			state.lastFastingTime = state.time.clone();
 		} else {
 			state.period = "fasting";	// switch to fasting
+			state.lastEatingTime = state.time.clone();
 		}
 		state.time = nearestHour();
 
 		saveState();
 
 		render();
+
+		// show the note, and then turn it off
+		showAlert();
 	});
 
 	// Handle the settings / debug button
@@ -66,6 +74,13 @@ function nearestHour(time) {
 	return time.clone().startOf("hour");
 }
 
+function numberOfFastingHours(time) {
+	// If no time has been passed in, use the current moment
+	if (typeof time !== "object") time = moment();
+
+	return state.lastFastingTime.diff(time, 'hours');
+}
+
 function inFast() {
 	return state.period === "fasting";
 }
@@ -81,16 +96,17 @@ function render() {
 
 function renderEatingState() {
 	var idealFastTime = state.time.clone().add(idealNumberOfEatingHoursPerDay(), "hours");
-	var idealHours = idealFastTime.from(moment().startOf("hour"), true);
+	var idealHours = idealFastTime.diff(nearestHour(), 'hour');
 
-	$("#hourmarker").html(idealHours);
+	$("#hourmarker").html(idealHours + " hours");
+	clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
 
 	$("#mode").html("You are eating");
 
+	$("#laststatus").html("your first meal was at <strong>" + state.time.format('ha') + "</strong>");
+
 	// "$IDEALHOURS hours until your ideal start time @$IDEALFROMNOW"
 	$("#timeleft").html("until you should start fasting at <strong>" + idealFastTime.format('ha') + "</strong>");
-	
-	$("#laststatus").html("You first meal was at <strong>" + state.time.format('ha') + "</strong>");
 
 	$("#eat").html("Start Fasting");
 }
@@ -100,14 +116,16 @@ function renderFastingState() {
 	var goalEndOfFastTime = state.time.clone().add(state.goal, "hours");
 
 	// The hours from $NOW to the $GOAL time
-	var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.from(nearestHour(), true);
+	var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.diff(nearestHour(), 'hour');
 
-	$("#hourmarker").html(hoursUntilGoalEndOfFastTime);
+	$("#hourmarker").html(hoursUntilGoalEndOfFastTime + " hours");
 
 	$("#mode").html("You are fasting");
 
 	var hoursUntilNumber = parseInt(hoursUntilGoalEndOfFastTime);
+
 	if (!isNaN(hoursUntilNumber)) {
+		clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
 		// Green: you have reached your goal, any additional hours are now gravy!
 		if (hoursUntilNumber < 1) {
 			$("#hourmarker").addClass("green");
@@ -123,12 +141,47 @@ function renderFastingState() {
 	// "to hit your $GOAL goal @ $GOALTIME"
 	$("#timeleft").html("to hit your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
 
-	$("#laststatus").html("You last meal was at <strong>" + state.time.format('ha') + "</strong>");
+	$("#laststatus").html("your last meal was at <strong>" + state.time.format('ha') + "</strong>");
 
 	$("#eat").html("Start Eating");
 }
 
-setInterval(render, 1000 * 60);
+
+
+function showAlert() {
+	if (!inFast()) {
+		var fastingHours = numberOfFastingHours();
+		var alertClass, extraMessage;
+		if (fastingHours > state.goal) { 
+			alertClass = "alert-success";
+			extraMessage = "<strong>Nicely done</strong>.";
+		} else if (fastingHours > idealNumberOfEatingHoursPerDay()) {
+			alertClass = "alert-warning";
+			extraMessage = "Not too shabby.";
+		} else {
+			alertClass = "alert-danger";
+			extraMessage = "Tomorrow comes quickly.";
+		}
+
+		$("#alert").html("You fasted for <strong>" + fastingHours + " hours</strong>. " + extraMessage);
+
+		clearClasses($("#alert"), ["alert-success", "alert-info", "alert-warning", "alert-danger"])
+		$("#alert").addClass(alertClass);
+		$("#alert").show();
+		setTimeout(function() {
+			$("#alert").hide();
+		}, 1000 * 60);
+	}
+}
+
+
+// Given an element nuke any class from the given class names
+// e.g. clearClasses($("#hourmarker"), ["green", "yellow", "red"])
+function clearClasses(el, classNames) {
+	classNames.forEach(function(className) {
+		el.removeClass(className);
+	});
+}
 
 // -- storage
 function saveState() {
