@@ -74,6 +74,13 @@ h1 {
   color: rgb(153, 153, 153)
 }
 
+#day1, #day2, #day3, #day5, #day6, #day7 {
+  width: 14.3%;
+}
+#day4 { /* make it add up to 100% nicely */
+  width: 14.2%;
+}
+
 .green {
   /*color: #dff0d8; light*/
   color: #449d44;
@@ -108,4 +115,10 @@ h1 {
 
 .navbar {
   box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2)
+}
+
+.progress {
+  position: relative;
+  top: 21px;
+  height: 3px;
 }
