@@ -84,7 +84,7 @@ function stringifyHours(hours) {
 	if (hours == 1) {
 		return hours + " hour";
 	} else if (hours < 0) {
-		return Math.abs(hours) + " hour";
+		return Math.abs(hours) + " hours";
 	} else {
 		return hours + " hours";
 	}
