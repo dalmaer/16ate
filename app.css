@@ -50,6 +50,17 @@ h1 {
   color: #eee;
 }
 
+@media only screen and (max-device-width:480px) {
+  /* hide the logo on the small screen */
+  #logo {
+    display: none;
+  }
+
+  .navbar-header {
+    margin-left: 0px;
+  }
+}
+
 #logo {
   position: absolute;
   float: left;
@@ -74,6 +85,7 @@ h1 {
   color: rgb(153, 153, 153)
 }
 
+/* The history days */
 #day1, #day2, #day3, #day5, #day6, #day7 {
   width: 14.3%;
 }
