@@ -159,7 +159,6 @@ function renderFastingState() {
 	var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.diff(nearestHour(), 'hour');
 
   var hoursFasting = hoursInThisState();
-  console.log(hoursFasting);
 
   // If the user has been fasting for a bit, tell them by how much
   if (hoursFasting > 0) {

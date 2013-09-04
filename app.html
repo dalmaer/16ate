@@ -53,19 +53,19 @@
         <div id="mode" class="navbar-brand"></div><!--You are fasting -->
         <div id="laststatus"></div> <!-- Your last meal was @ 6pm -->
       </div>
-
-      <div class="history progress">
-        <div id="day1" class="progress-bar progress-bar-success"><span class="sr-only">Day 1</span></div>
-        <div id="day2" class="progress-bar progress-bar-warning"><span class="sr-only">Day 2</span></div>
-        <div id="day3" class="progress-bar progress-bar-warning"><span class="sr-only">Day 3</span></div>
-        <div id="day4" class="progress-bar progress-bar-success"><span class="sr-only">Day 4</span></div>
-        <div id="day5" class="progress-bar progress-bar-warning"><span class="sr-only">Day 5</span></div>
-        <div id="day6" class="progress-bar progress-bar-success"><span class="sr-only">Day 6</span></div>
-        <div id="day7" class="progress-bar progress-bar-danger"><span class="sr-only">Day 7</span></div>
-      </div>
     </div>
 
-    <div id="content" class="container">
+    <div id="content">
+      <div id="history" class="progress">
+        <div id="day1" class="progress-bar progress-bar-success">17</div>
+        <div id="day2" class="progress-bar progress-bar-warning">12</div>
+        <div id="day3" class="progress-bar progress-bar-warning">13</div>
+        <div id="day4" class="progress-bar progress-bar-success">16</div>
+        <div id="day5" class="progress-bar progress-bar-warning">9</div>
+        <div id="day6" class="progress-bar progress-bar-success">18</div>
+        <div id="day7" class="progress-bar progress-bar-danger">8</div>
+      </div>
+
       <div id="alert" class="alert"></div>
 
       <div id="message" align="center">
@@ -124,33 +124,39 @@
 
 -->
 
-      <div class="settings panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Settings</h3>
+      <div class="container">
+        <div class="settings panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Settings</h3>
+          </div>
+          <div class="panel-body">
+            <table cellpadding="6">
+            <tr>
+              <td><em>goal hours</em></td>
+              <td><input type="text" id="settings-goal" value="16"></td>
+            </tr>
+            <tr>
+              <td><em>set time</em></td>
+              <td><input type="text" id="settings-time" placeholder="2013-08-31 18:00:00"></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><button id="settings" class="btn btn-default">save settings</button></td>
+            </tr>
+            </table>
+          </div>
         </div>
-        <div class="panel-body">
-          <table cellpadding="6">
-          <tr>
-            <td><em>goal hours</em></td>
-            <td><input type="text" id="settings-goal" value="16"></td>
-          </tr>
-          <tr>
-            <td><em>set time</em></td>
-            <td><input type="text" id="settings-time" placeholder="2013-08-31 18:00:00"></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td><button id="settings" class="btn btn-default">save settings</button></td>
-          </tr>
-          </table>
-        </div>
+      </div>
+
+      <div id="footer">
+        <strong>16:8</strong>. The fasting ratio of champions.
       </div>
 
     </div> <!-- /container -->
 
     <script src="bower_components/bootstrap/assets/js/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/moment/min/moment.min.js "></script>
+    <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
