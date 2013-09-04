@@ -55,11 +55,6 @@ h1 {
   #logo {
     display: none;
   }
-
-  /* don't shunt the header to the right */
-  .navbar-header {
-    margin-left: 0px !important;
-  }
 }
 
 #logo {
