@@ -225,10 +225,11 @@ function showAlert() {
 }
 
 // Hide the URL address bar on iOS
+// Also scrolling 21 pixels to hide the history colors
 // NOTE: not detecting iOS
 function hideAddressBar() {
   setTimeout(function(){
-    window.scrollTo(0, 1);
+    window.scrollTo(0, 21);
   }, 0);
 }
 
