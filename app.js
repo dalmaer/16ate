@@ -66,6 +66,12 @@ function idealNumberOfEatingHoursPerDay() {
 	return 24 - state.goal;
 }
 
+// The number of hours that the user has been in the given state (fasting / consumption)
+// e.g. the user started fasting at 8pm, and it is now 10am, this returns 14
+function hoursInThisState() {
+  return now().diff(state.time, 'hours');
+}
+
 // Sneak a peak at state.now to see if in debug mode the notion of "now" is hijacked
 function now() {
   // Defensive as this is called very early on
@@ -152,7 +158,15 @@ function renderFastingState() {
 	// e.g. if it is 9am the next day, the difference will be 1
 	var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.diff(nearestHour(), 'hour');
 
-	$("#mode").html("You are fasting");
+  var hoursFasting = hoursInThisState();
+  console.log(hoursFasting);
+
+  // If the user has been fasting for a bit, tell them by how much
+  if (hoursFasting > 0) {
+    $("#mode").html(stringifyHours(hoursFasting) + " fasting");
+  } else {
+    $("#mode").html("You are fasting");
+  }
 
 	clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
 
