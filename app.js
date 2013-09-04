@@ -41,7 +41,7 @@ $(document).ready(function() {
 
 	// Handle the settings / debug button
 	$("#settings").click(function(e) {
-		state.time = moment($("#settings-time").val());
+		state.time = smartTime($("#settings-time").val());
 		state.goal = parseInt($("#settings-goal").val())
 
 		console.log("Manually settings the state to: ");
@@ -122,6 +122,33 @@ function numberOfFastingHours(time) {
   // $future.diff($past) = positive amount
 	return time.diff(state.lastFastingTime, 'hours');
 }
+
+// Given a human passed in time, get a real date time back
+// 6pm y[esterday]: pm means "add 12 to the number"
+// 4[am]
+function smartTime(humanTime) {
+  var theTime = moment().startOf('hour'); // start with the top of the hour
+
+  // take out all of the cruft
+  var theHour = parseInt(humanTime);
+
+  // add on 12 hours if "pm" is matched
+  var pmOffset = (humanTime.indexOf('pm') > 0) ? 12 : 0;
+
+  theTime.hours(theHour + pmOffset);
+
+  // if yesterday, knock it back a day
+  if (humanTime.indexOf('y') > 0) {
+    theTime.subtract(1, 'day');
+  }
+
+  return theTime;
+}
+
+
+//
+// Rendering
+//
 
 function render() {
 	//console.log(Date.now());
