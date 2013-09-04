@@ -56,8 +56,9 @@ h1 {
     display: none;
   }
 
+  /* don't shunt the header to the right */
   .navbar-header {
-    margin-left: 0px;
+    margin-left: 0px !important;
   }
 }
 
@@ -121,8 +122,11 @@ h1 {
   color: white;
 }
 
-.navbar-header {
-  margin-left: 60px;
+/* only shunt over if the logo isn't there */
+@media not (max-device-width:480px) {
+  .navbar-header {
+    margin-left: 60px;
+  }
 }
 
 .navbar {
