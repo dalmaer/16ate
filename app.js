@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 	// Handle the main button which marks the flip between states
 	$("#eat").click(function(e) {
-		if (inFast()) {
+		if (fasting()) {
 			state.period = "eating";  // switch to eating
 			state.lastFastingTime = state.time.clone();
 		} else {
@@ -59,6 +59,10 @@ $(document).ready(function() {
   });
 
 });
+
+//
+// Time related functionality
+//
 
 // The ideal consuming hours are the inverse of your fasting goal time
 // If you stick to that amount, chances are it will be easier to stick to a rhythm
@@ -119,13 +123,9 @@ function numberOfFastingHours(time) {
 	return time.diff(state.lastFastingTime, 'hours');
 }
 
-function inFast() {
-	return state.period === "fasting";
-}
-
 function render() {
 	//console.log(Date.now());
-	if (inFast()) {
+	if (fasting()) {
 		renderFastingState();
 	} else {
 		renderEatingState();
@@ -205,7 +205,7 @@ function renderFastingState() {
 
 // If a fast was just completed, give some info to the user
 function showAlert() {
-	if (!inFast()) {
+	if (!fasting()) {
 		var fastingHours = numberOfFastingHours();
 		var alertClass, extraMessage;
 		if (fastingHours > state.goal) {
@@ -247,7 +247,14 @@ function clearClasses(el, classNames) {
 	});
 }
 
-// -- storage
+//
+// Storage / State Management
+//
+
+function fasting() {
+  return state.period === "fasting";
+}
+
 function saveState() {
 	if (localStorageWorks) {
 		localStorage.setItem("state", JSON.stringify(state));
