@@ -69,6 +69,9 @@ function idealNumberOfEatingHoursPerDay() {
 // The number of hours that the user has been in the given state (fasting / consumption)
 // e.g. the user started fasting at 8pm, and it is now 10am, this returns 14
 function hoursInThisState() {
+  // "If the moment is later than the moment you are passing to diff, the return value will be negative."
+  // e.g. $future.diff($past) = positive amount
+  //      $past.diff($future) = negative amount
   return now().diff(state.time, 'hours');
 }
 
@@ -87,10 +90,9 @@ function now() {
 // - When getting negative hours (getting past the goal for example) convert to positive as the UI will reflect the difference
 //   e.g. -1 => 1 hour past your goal!
 function stringifyHours(hours) {
+  hours = Math.abs(hours); // make sure we are positive only
 	if (hours == 1) {
 		return hours + " hour";
-	} else if (hours < 0) {
-		return Math.abs(hours) + " hours";
 	} else {
 		return hours + " hours";
 	}
@@ -113,7 +115,8 @@ function numberOfFastingHours(time) {
 	// If no time has been passed in, use the current moment
 	if (typeof time !== "object") time = now();
 
-	return state.lastFastingTime.diff(time, 'hours');
+  // $future.diff($past) = positive amount
+	return time.diff(state.lastFastingTime, 'hours');
 }
 
 function inFast() {
@@ -132,6 +135,9 @@ function render() {
 }
 
 function renderEatingState() {
+  // The time 8 (well, $IDEAL) hours from when eating started
+  // e.g. if eating started at 6pm then ideal fast start time = 2am
+  //      and then the number of hours until that time (if now==8pm) is 6
 	var idealFastTime = state.time.clone().add(idealNumberOfEatingHoursPerDay(), "hours");
 	var idealHours = idealFastTime.diff(nearestHour(), 'hour');
 

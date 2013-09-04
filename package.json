@@ -1,0 +1,27 @@
+{
+  "name": "16ate",
+  "version": "0.0.1",
+  "description": "The main fasting app behind 16ate.com",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dalmaer/16ate.git"
+  },
+  "keywords": [
+    "fasting"
+  ],
+  "author": "@dalmaer",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/dalmaer/16ate/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-concat": "~0.3.0"
+  }
+}

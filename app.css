@@ -90,7 +90,7 @@ h1 {
   width: 100%;
   text-align: center;
   border-radius: 0;
-  box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2)
+  box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2);
 }
 
 .progress-bar {
@@ -146,5 +146,5 @@ h1 {
 }
 
 .navbar {
-  box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2)
+  box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2);
 }
