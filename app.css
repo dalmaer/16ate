@@ -97,8 +97,13 @@ h1 {
   box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2);
 }
 
-.progress-bar {
-  padding-top: 6px;
+#welcome h4 {
+  margin-top: 1em;
+}
+
+#firstfast {
+  margin-top: 1.4em;
+  margin-bottom: 1.4em;
 }
 
 /* The history days */
@@ -109,6 +114,7 @@ h1 {
   width: 14.2%;
 }
 
+/* General Shared Styles */
 .green {
   color: #449d44;
 }
@@ -121,6 +127,11 @@ h1 {
   color: #c9302c;
 }
 
+.center-button {
+  display: block;
+  margin: 0 auto;
+}
+
 .settings {
   margin-top: 3em;
 }
@@ -131,8 +142,9 @@ h1 {
   font-style: italic;
   border-top: rgba(221,221,221, 0.6) 1px solid;
   background-color: rgb(245, 245, 245);
-  /*box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2);*/
 }
+
+
 /*
  * Enhance Twitter Bootstrap Classes
  */
@@ -151,4 +163,8 @@ h1 {
 
 .navbar {
   box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2);
+}
+
+.progress-bar {
+  padding-top: 6px;
 }

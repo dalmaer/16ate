@@ -1,3 +1,4 @@
+
 // The magical global state
 var state;
 
@@ -6,20 +7,13 @@ $(document).ready(function() {
 	// Setup the initial state by trying to read some from local storage
 	state = readState();
 
-	// If this is the first time ever seed a default state
-	if ( (state === null) || (!"goal" in state) ) {
-		state = {
-			period: "eating", // let's assume you are eating
-			goal: 16,         // hours to stay in fasting mode (this is 16ate after all!)
-			time: nearestHour().subtract(8, "hours") // set to be 8 hours ago
-		}
-		saveState();
-	}
-
-	// Render now ...
-	render();
-	// ... and re-render every minute
-	setInterval(render, 1000 * 60);
+	// If this is the first time ever, show help
+	if ( (state !== null) && ("goal" in state) ) {
+  	// Render now ...
+  	render();
+  	// ... and re-render every minute
+  	setInterval(render, 1000 * 60);
+  }
 
 	// Handle the main button which marks the flip between states
 	$("#eat").click(function(e) {
@@ -38,6 +32,23 @@ $(document).ready(function() {
 
 		showAlert(); // and then fade away in a bit
 	});
+
+  // Handle the main button which marks the flip between states
+  $("#firstfast").click(function(e) {
+    var nHour = nearestHour();
+
+    // setup the defaults
+    state = {
+      period: "fasting",
+      goal: 16,
+      time: nHour,
+      lastFastingTime: nHour
+    }
+
+    saveState();
+
+    render();
+  });
 
 	// Handle the settings / debug button
 	$("#settings").click(function(e) {
@@ -152,6 +163,9 @@ function smartTime(humanTime) {
 
 function render() {
 	//console.log(Date.now());
+  $("#info").show();
+  $("#welcome").hide();
+
 	if (fasting()) {
 		renderFastingState();
 	} else {
