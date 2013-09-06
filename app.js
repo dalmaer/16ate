@@ -20,22 +20,22 @@ $(document).ready(function() {
 		if (fasting()) {
 			state.period = "eating";  // switch to eating
 			state.lastFastingTime = state.time.clone();
+      showFastingResults(); // and then fade away in a bit
 		} else {
 			state.period = "fasting";	// switch to fasting
 			state.lastEatingTime = state.time.clone();
+      clearAlert();
 		}
-		state.time = nearestHour();
+		state.time = nearestHour(); // round up or down on input only
 
 		saveState();
 
 		render();
-
-		showAlert(); // and then fade away in a bit
 	});
 
   // Handle the main button which marks the flip between states
   $("#firstfast").click(function(e) {
-    var nHour = nearestHour();
+    var nHour = nearestHour(); // round up or down on input only
 
     // setup the defaults
     state = {
@@ -162,7 +162,6 @@ function smartTime(humanTime) {
 //
 
 function render() {
-	//console.log(Date.now());
   $("#info").show();
   $("#welcome").hide();
 
@@ -180,19 +179,26 @@ function renderEatingState() {
   // e.g. if eating started at 6pm then ideal fast start time = 2am
   //      and then the number of hours until that time (if now==8pm) is 6
 	var idealFastTime = state.time.clone().add(idealNumberOfEatingHoursPerDay(), "hours");
-	var idealHours = idealFastTime.diff(nearestHour(), 'hour');
-
-	$("#hourmarker").html(stringifyHours(idealHours));
-	clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
+	var idealHours = idealFastTime.diff(now(), 'hour');
 
 	$("#mode").html("You are eating");
 
 	$("#laststatus").html("your first meal was at <strong>" + state.time.format('ha') + "</strong>");
 
-	// "$IDEALHOURS hours until your ideal start time @$IDEALFROMNOW"
-	$("#timeleft").html("until you should start fasting at <strong>" + idealFastTime.format('ha') + "</strong>");
+  $("#hourmarker").html(stringifyHours(idealHours));
 
-	$("#eat").html("Start Fasting");
+  $("#eat").html("Start Fasting");
+
+  // if the hours is negative it means you have been eating for awhile
+  if (idealHours < 0) {
+    renderCurrentProgressIndicator("yellow");
+    $("#timeleft").html("past your fasting start time at <strong>" + idealFastTime.format('ha') + "</strong>");
+
+  // else you are still in a good eating time
+  } else {
+    // "until your ideal start time @$IDEALFROMNOW"
+    $("#timeleft").html("until you should start fasting at <strong>" + idealFastTime.format('ha') + "</strong>");
+  }
 }
 
 function renderFastingState() {
@@ -203,7 +209,7 @@ function renderFastingState() {
 
 	// The number of hours from $NOW to the $GOAL time
 	// e.g. if it is 9am the next day, the difference will be 1
-	var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.diff(nearestHour(), 'hour');
+	var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.diff(now(), 'hour');
 
   var hoursFasting = hoursInThisState();
 
@@ -214,40 +220,56 @@ function renderFastingState() {
     $("#mode").html("You are fasting");
   }
 
-	clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
+  $("#laststatus").html("your last meal was at <strong>" + state.time.format('ha') + "</strong>");
+
+  $("#hourmarker").html(stringifyHours(hoursUntilGoalEndOfFastTime));
+
+  $("#eat").html("Start Eating");
 
 	// if the hours is negative it means you are past your goal!
 	if (hoursUntilGoalEndOfFastTime < 0) {
-		$("#hourmarker").addClass("green");
-		$("#hourmarker").html(stringifyHours(hoursUntilGoalEndOfFastTime));
+    renderCurrentProgressIndicator("green");
 		$("#timeleft").html("past your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
 
 	// else there is time left to hit your goal
 	} else {
-		$("#hourmarker").html(stringifyHours(hoursUntilGoalEndOfFastTime));
-
 		// "to hit your $GOAL goal @ $GOALTIME"
 		$("#timeleft").html("to hit your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
 
 		// Yellow: you are within 8 hours of your goal
 		if (hoursUntilGoalEndOfFastTime < idealNumberOfEatingHoursPerDay()) {
-			$("#hourmarker").addClass("yellow");
+      renderCurrentProgressIndicator("yellow");
 		// Red: you are more than 8 hours out from the goal
 		} else {
-			$("#hourmarker").addClass("red");
+      renderCurrentProgressIndicator("red");
 		}
 	}
-
-	$("#laststatus").html("your last meal was at <strong>" + state.time.format('ha') + "</strong>");
-
-	$("#eat").html("Start Eating");
 }
 
+// How are things going today?
+// When setting the vibe to green, yellow, or red, also make sure that
+// the history bar has a sneak peak on today too
+
+var hexBackgroundColorFor = {
+  "green": "#5cb85c",
+  "yellow": "#f0ad4e",
+  "red": "#d9534f"
+};
+
+function renderCurrentProgressIndicator(color) {
+  clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
+  $("#hourmarker").addClass(color);
+  $("#history").css('background-color', hexBackgroundColorFor[color] || "#000000");
+}
 
 // If a fast was just completed, give some info to the user
-function showAlert() {
+function showFastingResults() {
 	if (!fasting()) {
-		var fastingHours = numberOfFastingHours();
+    var rightNow = now(); // capture the time once
+    var fastingStarted = state.lastFastingTime.format('ha');
+    var fastingEnded = rightNow.format('ha'); // assumption that this comes right after the state change
+		var fastingHours = numberOfFastingHours(rightNow);
+
 		var alertClass, extraMessage;
 		if (fastingHours > state.goal) {
 			alertClass = "alert-success";
@@ -260,7 +282,7 @@ function showAlert() {
 			extraMessage = "Tomorrow comes quickly.";
 		}
 
-		$("#alert").html("You fasted for <strong>" + fastingHours + " hours</strong>. " + extraMessage);
+		$("#alert").html("You fasted for <strong>" + fastingHours + " hours</strong> (<em>" + fastingStarted + " - " + fastingEnded + "</em>).<br>" + extraMessage);
 
 		clearClasses($("#alert"), ["alert-success", "alert-info", "alert-warning", "alert-danger"])
 		$("#alert").addClass(alertClass);
@@ -269,6 +291,10 @@ function showAlert() {
 			$("#alert").hide();
 		}, 1000 * 60);
 	}
+}
+
+function clearAlert() {
+  $("#alert").hide();
 }
 
 // Hide the URL address bar on iOS

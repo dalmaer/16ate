@@ -93,7 +93,7 @@ h1 {
   width: 100%;
   text-align: center;
   border-radius: 0;
-  background-color: #449d44; /* green */
+  background-color: #449d44; /* default to green */
   box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2);
 }
 
@@ -107,11 +107,8 @@ h1 {
 }
 
 /* The history days */
-#day1, #day2, #day3, #day5, #day6, #day7 {
-  width: 14.3%;
-}
-#day4 { /* make it add up to 100% nicely */
-  width: 14.2%;
+#day1, #day2, #day3, #day4, #day5, #day6, #day7 {
+  width: 14%; /* doesn't add up to 100% on purpose, leaving room for a bit of today */
 }
 
 /* General Shared Styles */
