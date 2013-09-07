@@ -192,7 +192,7 @@ function renderEatingState() {
 
 	$("#laststatus").html("your first meal was at <strong>" + state.time.format('ha') + "</strong>");
 
-  $("#hourmarker").html(stringifyHours(idealHours));
+  $("#timemarker").html(stringifyHours(idealHours));
 
   $("#eat").html("Start Fasting");
 
@@ -228,7 +228,7 @@ function renderFastingState() {
 
   $("#laststatus").html("your last meal was at <strong>" + state.time.format('ha') + "</strong>");
 
-  $("#hourmarker").html(stringifyHours(hoursUntilGoalEndOfFastTime));
+  $("#timemarker").html(stringifyHours(hoursUntilGoalEndOfFastTime));
 
   $("#eat").html("Start Eating");
 
@@ -242,7 +242,7 @@ function renderFastingState() {
     // if the number of minutes are negative that means you are actually ahead of the goal
     // e.g. if the goal is 11am and it is 11:42, this will return -42
     var minutesUntilGoalEndOfFastTime = goalEndOfFastTime.diff(now(), 'minutes');
-    $("#hourmarker").html(stringifyMinutes(minutesUntilGoalEndOfFastTime));
+    $("#timemarker").html(stringifyMinutes(minutesUntilGoalEndOfFastTime));
     if (minutesUntilGoalEndOfFastTime < 0) {
       renderCurrentProgressIndicator("green");
       $("#timeleft").html("past your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
@@ -277,8 +277,8 @@ var hexBackgroundColorFor = {
 };
 
 function renderCurrentProgressIndicator(color) {
-  clearClasses($("#hourmarker"), ["green", "yellow", "red"]);
-  $("#hourmarker").addClass(color);
+  clearClasses($("#timemarker"), ["green", "yellow", "red"]);
+  $("#timemarker").addClass(color);
   $("#history").css('background-color', hexBackgroundColorFor[color] || "#000000");
 }
 
@@ -327,7 +327,7 @@ function hideAddressBar() {
 }
 
 // Given an element nuke any class from the given class names
-// e.g. clearClasses($("#hourmarker"), ["green", "yellow", "red"])
+// e.g. clearClasses($("#timemarker"), ["green", "yellow", "red"])
 function clearClasses(el, classNames) {
 	classNames.forEach(function(className) {
 		el.removeClass(className);
@@ -385,7 +385,7 @@ var localStorageWorks = !!function() {
 // - Calculate the number of hours between now (10am) and yesterday at 7pm
 // - set state.meal == "first"
 // - set state.time == now (now == rounded to the nearest hour)
-// - change #hourmarker to be (24-$GOAL) hours ("8 hours")
+// - change #timemarker to be (24-$GOAL) hours ("8 hours")
 // - change #timeleft to be "until you will start your fast @$IDEALFROMNOW" where $IDEALFROMNOW is $NOW + 8 hours
 // - change #laststatus to be "Your first meal was at $NOW"
 
@@ -394,6 +394,6 @@ var localStorageWorks = !!function() {
 // I hit the button to shift to the fasting state
 // - set state.meal == "last"
 // - set state.time == now
-// - change #hourmarker to be $GOAL hours ("16 hours")
+// - change #timemarker to be $GOAL hours ("16 hours")
 // - change #timeleft to be "to hit your $GOAL goal @ $GOALTIME" where goaltime is $NOW + $GOAL
 // - change #laststatus to be "Your last meal was at $NOW" (rounded)
