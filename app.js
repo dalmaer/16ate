@@ -105,13 +105,20 @@ function now() {
 // - When getting negative hours (getting past the goal for example) convert to positive as the UI will reflect the difference
 //   e.g. -1 => 1 hour past your goal!
 function stringifyHours(hours) {
-  hours = Math.abs(hours); // make sure we are positive only
-	if (hours == 1) {
-		return hours + " hour";
-	} else {
-		return hours + " hours";
-	}
+  return stringifyNumber(hours, "hour");
 }
+function stringifyMinutes(minutes) {
+  return stringifyNumber(minutes, "minute");
+}
+function stringifyNumber(number, time) {
+  number = Math.abs(number); // make sure we are positive only
+  var returnTime = number + " " + time;
+  if (number != 1) {
+    returnTime = returnTime + "s";
+  }
+  return returnTime;
+}
+
 
 // Given a time, find the nearest half an hour and return that time
 // If the hour has more than 30 minutes, add 30 and then it is save to get
@@ -210,7 +217,6 @@ function renderFastingState() {
 	// The number of hours from $NOW to the $GOAL time
 	// e.g. if it is 9am the next day, the difference will be 1
 	var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.diff(now(), 'hour');
-
   var hoursFasting = hoursInThisState();
 
   // If the user has been fasting for a bit, tell them by how much
@@ -230,6 +236,20 @@ function renderFastingState() {
 	if (hoursUntilGoalEndOfFastTime < 0) {
     renderCurrentProgressIndicator("green");
 		$("#timeleft").html("past your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
+
+  // if the hours difference are "0" then you are close and we need to customize things a bit
+  } else if (hoursUntilGoalEndOfFastTime == 0) {
+    // if the number of minutes are negative that means you are actually ahead of the goal
+    // e.g. if the goal is 11am and it is 11:42, this will return -42
+    var minutesUntilGoalEndOfFastTime = goalEndOfFastTime.diff(now(), 'minutes');
+    $("#hourmarker").html(stringifyMinutes(minutesUntilGoalEndOfFastTime));
+    if (minutesUntilGoalEndOfFastTime < 0) {
+      renderCurrentProgressIndicator("green");
+      $("#timeleft").html("past your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
+    } else {
+      renderCurrentProgressIndicator("yellow");
+      $("#timeleft").html("away from your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
+    }
 
 	// else there is time left to hit your goal
 	} else {
