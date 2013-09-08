@@ -52,10 +52,14 @@ $(document).ready(function() {
 
 	// Handle the settings / debug button
 	$("#settings").click(function(e) {
-		state.time = smartTime($("#settings-time").val());
-		state.goal = parseInt($("#settings-goal").val())
+    // only write over the state for time and goal if valid input is given
+		var newTime = smartTime($("#settings-time").val());
+    if (newTime) state.time = newTime;
 
-		console.log("Manually settings the state to: ");
+    var newGoal = parseInt($("#settings-goal").val());
+    if (newGoal) state.goal = newGoal;
+
+		console.log("The state is: ");
 		console.log("Time: ", state.time);
 		console.log("Goal: ", state.goal);
 
@@ -145,10 +149,12 @@ function numberOfFastingHours(time) {
 // 6pm y[esterday]: pm means "add 12 to the number"
 // 4[am]
 function smartTime(humanTime) {
-  var theTime = moment().startOf('hour'); // start with the top of the hour
-
   // take out all of the cruft
   var theHour = parseInt(humanTime);
+
+  if (isNaN(theHour)) return; // if theHour isn't a number return undefined
+
+  var theTime = moment().startOf('hour'); // start with the top of the hour
 
   // add on 12 hours if "pm" is matched
   var pmOffset = (humanTime.indexOf('pm') > 0) ? 12 : 0;
