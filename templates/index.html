@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>16ate: Track your Intermittent Fasting</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="description" content="16ate is a simple tracking tool for fasting">
+    <meta name="author" content="Dion Almaer (@dalmaer, @16ateFasting)">
+    <link rel="shortcut icon" href="{{uurl 'static/images/favicon.png'}}">
+
+    <!-- iPhone -->
+    <link href="{{uurl 'static/images/apple-touch-icon-57x57.png'}}"
+          sizes="57x57"
+          rel="apple-touch-icon">
+    <link href="{{uurl 'static/images/apple-touch-startup-image-320x460.png'}}"
+          media="(device-width: 320px) and (device-height: 480px)
+             and (-webkit-device-pixel-ratio: 1)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPhone (Retina) -->
+    <link href="{{uurl 'static/images/apple-touch-icon-114x114.png'}}"
+          sizes="114x114"
+          rel="apple-touch-icon">
+    <link href="{{uurl 'static/images/apple-touch-startup-image-640x920.png'}}"
+          media="(device-width: 320px) and (device-height: 480px)
+             and (-webkit-device-pixel-ratio: 2)"
+          rel="apple-touch-startup-image">
+
+    <!-- iPhone 5 -->
+    <link href="{{uurl 'static/images/apple-touch-startup-image-640x1096.png'}}"
+          media="(device-width: 320px) and (device-height: 568px)
+             and (-webkit-device-pixel-ratio: 2)"
+          rel="apple-touch-startup-image">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{uurl 'components/bootstrap/dist/css/bootstrap.css'}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{uurl 'app.css'}}" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="header" class="navbar navbar-inverse">
+      <a id="logo" href="#">
+        <span id="sixteen">16</span>
+        <span id="eight">/8</span>
+      </a>
+
+      <div class="navbar-header" align="center">
+        <div id="mode" class="navbar-brand">Welcome to 16:8</div><!--You are fasting -->
+        <div id="laststatus">Your simple fasting tracker</div> <!-- Your last meal was @ 6pm -->
+      </div>
+    </div>
+
+    <div id="content">
+
+      <div id="welcome" class="container">
+        <h4>Get Started</h4>
+        <p>
+        When you are ready to start fasting, tap the button (<em>give it a try!</em>):
+          <button id="firstfast" class="btn btn-primary btn-lg center-button">Starting My First Fast!</button>
+        </p>
+
+        <h4>We believe that intermittent fasting is good for your health</h4>
+        <p>
+        This micro app let's you easily track your fasting time. The standard goal is to fast for 16 hours of the day, and consume your food in the remaining 8 hours.
+        </p>
+        <p>
+        For example, if you have an early dinner which completes at 7pm, then you try to start eating again around 1pm the next day.
+        </p>
+        <p>
+        That is just an example, and you can decide to fast and eat at times that make sense for you.
+        </p>
+      </div>
+
+      <!-- The main application view itself -->
+      <div id="info" style="display:none">
+        <div id="history" class="progress">
+          <div id="day1" class="progress-bar progress-bar-success">17</div>
+          <div id="day2" class="progress-bar progress-bar-warning">12</div>
+          <div id="day3" class="progress-bar progress-bar-warning">13</div>
+          <div id="day4" class="progress-bar progress-bar-success">16</div>
+          <div id="day5" class="progress-bar progress-bar-warning">9</div>
+          <div id="day6" class="progress-bar progress-bar-success">18</div>
+          <div id="day7" class="progress-bar progress-bar-danger">8</div>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <div id="message" align="center">
+          <h1 id="timemarker"></h1> <!-- 8 hours -->
+
+          <p id="timeleft"></p> <!-- until you should start eating @ 4pm -->
+        </div>
+
+  			<button id="eat" class="btn btn-primary btn-lg center-button">My First Meal</button>
+
+        <div class="container">
+          <div class="settings panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Settings</h3>
+            </div>
+            <div class="panel-body">
+              <table cellpadding="6">
+              <tr>
+                <td><em>goal hours</em></td>
+                <td><input type="text" id="settings-goal" value="16"></td>
+              </tr>
+              <tr>
+                <td><em>set time</em></td>
+                <td><input type="text" id="settings-time" placeholder="6pm y (for yesterday)"></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><button id="settings" class="btn btn-default">save settings</button></td>
+              </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="footer">
+        <strong>16:8</strong>. The fasting ratio of champions. Serving version {{ version }}.
+      </div>
+
+    </div> <!-- /container -->
+
+    <script src="{{uurl 'components/bootstrap/assets/js/jquery.js'}}"></script>
+    <script src="{{uurl 'components/bootstrap/dist/js/bootstrap.min.js'}}"></script>
+    <script src="{{uurl 'components/moment/min/moment.min.js'}}"></script>
+    <script src="{{uurl 'app.js'}}"></script>
+  </body>
+</html>
