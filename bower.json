@@ -4,8 +4,10 @@
   "description": "A simple intermittant fasting tracker",
   "main": "index.html",
   "keywords": [
+    "health",
     "fast",
-    "health"
+    "fasting",
+    "eat"
   ],
   "authors": [
     "Dion Almaer (@dalmaer)"
