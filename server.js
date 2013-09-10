@@ -1,3 +1,6 @@
+//
+// Serve the fasters
+//
 var Hapi = require('hapi');
 
 var port = parseInt(process.env.PORT) || 5000;
@@ -5,8 +8,6 @@ var port = parseInt(process.env.PORT) || 5000;
 var packageJSON = require("./package.json");
 
 var appVersion = packageJSON.version || '13.3.7';
-
-console.log("What port in a storm?", port);
 
 //
 // Start the server configuration engines!
@@ -46,16 +47,21 @@ server.route([{
   }
 }]);
 
+// Print out the errors please
 server.on('request', function (request, event, tags) {
     if (tags.error) {
         console.error(event);
     }
 });
 
+// After you start, please let me know where you are listening
 server.start(function() {
   console.log("The server is listening at", server.info.uri);
 });
 
+
+//
+// Helper Functions
 //
 
 function handlebarsEngine() {

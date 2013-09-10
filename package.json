@@ -28,5 +28,9 @@
   "dependencies": {
     "hapi": "~1.10.0",
     "handlebars": "~1.0.12"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm":  "1.2.x"
   }
 }
