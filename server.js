@@ -6,9 +6,12 @@ var packageJSON = require("./package.json");
 
 var appVersion = packageJSON.version || '13.3.7';
 
+console.log("What port in a storm? ", port);
+
 //
 // Start the server configuration engines!
-var server = new Hapi.Server(port, {
+//
+var server = Hapi.createServer(port, {
 	views: {
 		path: 'templates',
 		engines: {
