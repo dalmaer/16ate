@@ -7,12 +7,14 @@ $(document).ready(function() {
 	// Setup the initial state by trying to read some from local storage
 	state = readState();
 
-	// If this is the first time ever, show help
+	// If we have some state, render the main experience
 	if ( (state !== null) && ("goal" in state) ) {
   	// Render now ...
   	render();
   	// ... and re-render every minute
   	setInterval(render, 1000 * 60);
+  } else { // show the welcome screen (since it may be hidden by the CSS)
+    $("#welcome").show();
   }
 
 	// Handle the main button which marks the flip between states
