@@ -1,6 +1,6 @@
 {
   "name": "16ate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The main fasting app behind 16ate.com",
   "main": "server.js",
   "scripts": {
