@@ -145,6 +145,17 @@ h1 {
   text-align: right;
 }
 
+/*
+ * Turn off the welcome to stop the flash
+ */
+.js #welcome {
+  display: none;
+}
+
+.js #info {
+  display: block;
+}
+
 
 /*
  * Enhance Twitter Bootstrap Classes
