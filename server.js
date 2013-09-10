@@ -1,12 +1,12 @@
 var Hapi = require('hapi');
 
-var port = process.env.PORT || 5000;
+var port = parseInt(process.env.PORT) || 5000;
 
 var packageJSON = require("./package.json");
 
 var appVersion = packageJSON.version || '13.3.7';
 
-console.log("What port in a storm? ", port);
+console.log("What port in a storm?", port);
 
 //
 // Start the server configuration engines!
