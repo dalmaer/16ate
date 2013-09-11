@@ -3670,36 +3670,36 @@ var state;
 
 // Wire up the events and get ready
 $(document).ready(function() {
-	// Setup the initial state by trying to read some from local storage
-	state = readState();
+  // Setup the initial state by trying to read some from local storage
+  state = readState();
 
-	// If we have some state, render the main experience
-	if ( (state !== null) && ("goal" in state) ) {
-  	// Render now ...
-  	render();
-  	// ... and re-render every minute
-  	setInterval(render, 1000 * 60);
+  // If we have some state, render the main experience
+  if ( (state !== null) && ("goal" in state) ) {
+    // Render now ...
+    render();
+    // ... and re-render every minute
+    setInterval(render, 1000 * 60);
   } else { // show the welcome screen (since it may be hidden by the CSS)
     $("#welcome").show();
   }
 
-	// Handle the main button which marks the flip between states
-	$("#eat").click(function(e) {
-		if (fasting()) {
-			state.period = "eating";  // switch to eating
-			state.lastFastingTime = state.time.clone();
+  // Handle the main button which marks the flip between states
+  $("#eat").click(function(e) {
+    if (fasting()) {
+      state.period = "eating";  // switch to eating
+      state.lastFastingTime = state.time.clone();
       showFastingResults(); // and then fade away in a bit
-		} else {
-			state.period = "fasting";	// switch to fasting
-			state.lastEatingTime = state.time.clone();
+    } else {
+      state.period = "fasting"; // switch to fasting
+      state.lastEatingTime = state.time.clone();
       clearAlert();
-		}
-		state.time = nearestHour(); // round up or down on input only
+    }
+    state.time = nearestHour(); // round up or down on input only
 
-		saveState();
+    saveState();
 
-		render();
-	});
+    render();
+  });
 
   // Handle the main button which marks the flip between states
   $("#firstfast").click(function(e) {
@@ -3711,30 +3711,30 @@ $(document).ready(function() {
       goal: 16,
       time: nHour,
       lastFastingTime: nHour
-    }
+    };
 
     saveState();
 
     render();
   });
 
-	// Handle the settings / debug button
-	$("#settings").click(function(e) {
+  // Handle the settings / debug button
+  $("#settings").click(function(e) {
     // only write over the state for time and goal if valid input is given
-		var newTime = smartTime($("#settings-time").val());
+    var newTime = smartTime($("#settings-time").val());
     if (newTime) state.time = newTime;
 
-    var newGoal = parseInt($("#settings-goal").val());
+    var newGoal = parseInt($("#settings-goal").val(), 10);
     if (newGoal) state.goal = newGoal;
 
-		console.log("The state is: ");
-		console.log("Time: ", state.time);
-		console.log("Goal: ", state.goal);
+    console.log("The state is: ");
+    console.log("Time: ", state.time);
+    console.log("Goal: ", state.goal);
 
-		saveState();
+    saveState();
 
-		render();
-	});
+    render();
+  });
 
   // If you tap on the header, get rid of the bar
   $("#header").click(function(e) {
@@ -3750,7 +3750,7 @@ $(document).ready(function() {
 // The ideal consuming hours are the inverse of your fasting goal time
 // If you stick to that amount, chances are it will be easier to stick to a rhythm
 function idealNumberOfEatingHoursPerDay() {
-	return 24 - state.goal;
+  return 24 - state.goal;
 }
 
 // The number of hours that the user has been in the given state (fasting / consumption)
@@ -3795,22 +3795,22 @@ function stringifyNumber(number, time) {
 // Given a time, find the nearest half an hour and return that time
 // If the hour has more than 30 minutes, add 30 and then it is save to get
 function nearestHour(time) {
-	// If no time has been passed in, use the current moment
-	if (typeof time !== "object") time = now();
+  // If no time has been passed in, use the current moment
+  if (typeof time !== "object") time = now();
 
-	if (time.minute() > 30) {
-		time.add(31, 'minutes');
-	}
-	return time.clone().startOf("hour");
+  if (time.minute() > 30) {
+    time.add(31, 'minutes');
+  }
+  return time.clone().startOf("hour");
 }
 
 // Return the number of hours between the last fasting time and the given time
 function numberOfFastingHours(time) {
-	// If no time has been passed in, use the current moment
-	if (typeof time !== "object") time = now();
+  // If no time has been passed in, use the current moment
+  if (typeof time !== "object") time = now();
 
   // $future.diff($past) = positive amount
-	return time.diff(state.lastFastingTime, 'hours');
+  return time.diff(state.lastFastingTime, 'hours');
 }
 
 // Given a human passed in time, get a real date time back
@@ -3818,7 +3818,7 @@ function numberOfFastingHours(time) {
 // 4[am]
 function smartTime(humanTime) {
   // take out all of the cruft
-  var theHour = parseInt(humanTime);
+  var theHour = parseInt(humanTime, 10);
 
   if (isNaN(theHour)) return; // if theHour isn't a number return undefined
 
@@ -3846,11 +3846,11 @@ function render() {
   $("#info").show();
   $("#welcome").hide();
 
-	if (fasting()) {
-		renderFastingState();
-	} else {
-		renderEatingState();
-	}
+  if (fasting()) {
+    renderFastingState();
+  } else {
+    renderEatingState();
+  }
 
   hideAddressBar(); // ah the good ole iOS address bar hack
 }
@@ -3859,12 +3859,12 @@ function renderEatingState() {
   // The time 8 (well, $IDEAL) hours from when eating started
   // e.g. if eating started at 6pm then ideal fast start time = 2am
   //      and then the number of hours until that time (if now==8pm) is 6
-	var idealFastTime = state.time.clone().add(idealNumberOfEatingHoursPerDay(), "hours");
-	var idealHours = idealFastTime.diff(now(), 'hour');
+  var idealFastTime = state.time.clone().add(idealNumberOfEatingHoursPerDay(), "hours");
+  var idealHours = idealFastTime.diff(now(), 'hour');
 
-	$("#mode").html("You are eating");
+  $("#mode").html("You are eating");
 
-	$("#laststatus").html("your first meal was at <strong>" + state.time.format('ha') + "</strong>");
+  $("#laststatus").html("your first meal was at <strong>" + state.time.format('ha') + "</strong>");
 
   $("#timemarker").html(stringifyHours(idealHours));
 
@@ -3883,14 +3883,14 @@ function renderEatingState() {
 }
 
 function renderFastingState() {
-	// The time that is $GOAL hours from when fasting began
-	// e.g if the goal is 16 hours, and fasting began at 6pm,
-	//     then the time will represent the next day at 10am.
-	var goalEndOfFastTime = state.time.clone().add(state.goal, "hours");
+  // The time that is $GOAL hours from when fasting began
+  // e.g if the goal is 16 hours, and fasting began at 6pm,
+  //     then the time will represent the next day at 10am.
+  var goalEndOfFastTime = state.time.clone().add(state.goal, "hours");
 
-	// The number of hours from $NOW to the $GOAL time
-	// e.g. if it is 9am the next day, the difference will be 1
-	var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.diff(now(), 'hour');
+  // The number of hours from $NOW to the $GOAL time
+  // e.g. if it is 9am the next day, the difference will be 1
+  var hoursUntilGoalEndOfFastTime = goalEndOfFastTime.diff(now(), 'hour');
   var hoursFasting = hoursInThisState();
 
   // If the user has been fasting for a bit, tell them by how much
@@ -3906,13 +3906,13 @@ function renderFastingState() {
 
   $("#eat").html("Start Eating");
 
-	// if the hours is negative it means you are past your goal!
-	if (hoursUntilGoalEndOfFastTime < 0) {
+  // if the hours is negative it means you are past your goal!
+  if (hoursUntilGoalEndOfFastTime < 0) {
     renderCurrentProgressIndicator("green");
-		$("#timeleft").html("past your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
+    $("#timeleft").html("past your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
 
   // if the hours difference are "0" then you are close and we need to customize things a bit
-  } else if (hoursUntilGoalEndOfFastTime == 0) {
+  } else if (hoursUntilGoalEndOfFastTime === 0) {
     // if the number of minutes are negative that means you are actually ahead of the goal
     // e.g. if the goal is 11am and it is 11:42, this will return -42
     var minutesUntilGoalEndOfFastTime = goalEndOfFastTime.diff(now(), 'minutes');
@@ -3925,19 +3925,19 @@ function renderFastingState() {
       $("#timeleft").html("away from your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
     }
 
-	// else there is time left to hit your goal
-	} else {
-		// "to hit your $GOAL goal @ $GOALTIME"
-		$("#timeleft").html("to hit your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
+  // else there is time left to hit your goal
+  } else {
+    // "to hit your $GOAL goal @ $GOALTIME"
+    $("#timeleft").html("to hit your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format('ha') + "</strong>");
 
-		// Yellow: you are within 8 hours of your goal
-		if (hoursUntilGoalEndOfFastTime < idealNumberOfEatingHoursPerDay()) {
+    // Yellow: you are within 8 hours of your goal
+    if (hoursUntilGoalEndOfFastTime < idealNumberOfEatingHoursPerDay()) {
       renderCurrentProgressIndicator("yellow");
-		// Red: you are more than 8 hours out from the goal
-		} else {
+    // Red: you are more than 8 hours out from the goal
+    } else {
       renderCurrentProgressIndicator("red");
-		}
-	}
+    }
+  }
 }
 
 // How are things going today?
@@ -3958,33 +3958,33 @@ function renderCurrentProgressIndicator(color) {
 
 // If a fast was just completed, give some info to the user
 function showFastingResults() {
-	if (!fasting()) {
+  if (!fasting()) {
     var rightNow = now(); // capture the time once
     var fastingStarted = state.lastFastingTime.format('ha');
     var fastingEnded = rightNow.format('ha'); // assumption that this comes right after the state change
-		var fastingHours = numberOfFastingHours(rightNow);
+    var fastingHours = numberOfFastingHours(rightNow);
 
-		var alertClass, extraMessage;
-		if (fastingHours > state.goal) {
-			alertClass = "alert-success";
-			extraMessage = "<strong>Nicely done</strong>.";
-		} else if (fastingHours > idealNumberOfEatingHoursPerDay()) {
-			alertClass = "alert-warning";
-			extraMessage = "Not too shabby.";
-		} else {
-			alertClass = "alert-danger";
-			extraMessage = "Tomorrow comes quickly.";
-		}
+    var alertClass, extraMessage;
+    if (fastingHours > state.goal) {
+      alertClass = "alert-success";
+      extraMessage = "<strong>Nicely done</strong>.";
+    } else if (fastingHours > idealNumberOfEatingHoursPerDay()) {
+      alertClass = "alert-warning";
+      extraMessage = "Not too shabby.";
+    } else {
+      alertClass = "alert-danger";
+      extraMessage = "Tomorrow comes quickly.";
+    }
 
-		$("#alert").html("You fasted for <strong>" + fastingHours + " hours</strong> (<em>" + fastingStarted + " - " + fastingEnded + "</em>).<br>" + extraMessage);
+    $("#alert").html("You fasted for <strong>" + fastingHours + " hours</strong> (<em>" + fastingStarted + " - " + fastingEnded + "</em>).<br>" + extraMessage);
 
-		clearClasses($("#alert"), ["alert-success", "alert-info", "alert-warning", "alert-danger"])
-		$("#alert").addClass(alertClass);
-		$("#alert").show();
-		setTimeout(function() {
-			$("#alert").hide();
-		}, 1000 * 60);
-	}
+    clearClasses($("#alert"), ["alert-success", "alert-info", "alert-warning", "alert-danger"]);
+    $("#alert").addClass(alertClass);
+    $("#alert").show();
+    setTimeout(function() {
+      $("#alert").hide();
+    }, 1000 * 60);
+  }
 }
 
 function clearAlert() {
@@ -4003,9 +4003,9 @@ function hideAddressBar() {
 // Given an element nuke any class from the given class names
 // e.g. clearClasses($("#timemarker"), ["green", "yellow", "red"])
 function clearClasses(el, classNames) {
-	classNames.forEach(function(className) {
-		el.removeClass(className);
-	});
+  classNames.forEach(function(className) {
+    el.removeClass(className);
+  });
 }
 
 //
@@ -4017,32 +4017,32 @@ function fasting() {
 }
 
 function saveState() {
-	if (localStorageWorks) {
-		localStorage.setItem("state", JSON.stringify(state));
-	} else {
-		window['globalState'] = state;
-	}
+  if (localStorageWorks) {
+    localStorage.setItem("state", JSON.stringify(state));
+  } else {
+    window.globalState = state;
+  }
 }
 
 function readState() {
-	// NUKE
-	// localStorage.removeItem("state");
-	// return;
+  // NUKE
+  // localStorage.removeItem("state");
+  // return;
 
-	if (localStorageWorks) {
-		var read = JSON.parse(localStorage.getItem("state"));
-		if (read != null && "time" in read) {
-			read.time = moment(read.time); // convert the time back to a moment object
-		}
-		return read;
-	} else {
-		return window['globalState'];
-	}
+  if (localStorageWorks) {
+    var read = JSON.parse(localStorage.getItem("state"));
+    if (read !== null && "time" in read) {
+      read.time = moment(read.time); // convert the time back to a moment object
+    }
+    return read;
+  } else {
+    return window.globalState;
+  }
 }
 
 // only need to check once
 var localStorageWorks = !!function() {
-	var test = 't';
+  var test = 't';
   try {
     localStorage.setItem(test, test);
     localStorage.removeItem(test);

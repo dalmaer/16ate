@@ -1,7 +1,3 @@
-body {
-
-}
-
 h1 {
   font-size: 64px;
 }
@@ -22,10 +18,7 @@ h1 {
 
 #alert {
   display: none;
-  margin-bottom: 0;
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 20px 20px 0 20px;
   text-align: center;
 }
 
@@ -86,7 +79,7 @@ h1 {
 #history {
   position: relative;
   overflow: hidden;
-  top: 0px;
+  top: 0;
   height: 2em;
   margin: 0;
   padding: 0;
@@ -94,7 +87,7 @@ h1 {
   text-align: center;
   border-radius: 0;
   background-color: #449d44; /* default to green */
-  box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2);
+  box-shadow: 0 3px 2px 0 rgba(0,0,0, 0.2);
 }
 
 #welcome h4 {
@@ -174,7 +167,7 @@ h1 {
 }
 
 .navbar {
-  box-shadow: 0 3px 2px 0px rgba(0,0,0, 0.2);
+  box-shadow: 0 3px 2px 0 rgba(0,0,0, 0.2);
 }
 
 .progress-bar {

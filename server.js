@@ -3,7 +3,7 @@
 //
 var Hapi = require('hapi');
 
-var port = parseInt(process.env.PORT) || 5000;
+var port = parseInt(process.env.PORT, 10) || 5000;
 
 var packageJSON = require("./package.json");
 
@@ -29,7 +29,7 @@ server.route([{
   handler: function(request) {
     request.reply.view('index.html', {
       version: appVersion,
-      development: process.env['NODE_ENV'] !== "production"
+      development: process.env.NODE_ENV !== "production"
     });
   }
 }, {

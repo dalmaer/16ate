@@ -30,6 +30,18 @@ module.exports = function(grunt) {
       }
     },
 
+    jshint: {
+      all: ['*.js'],
+      jshintrc: '.jshintrc'
+    },
+
+    csslint: {
+      src: ['app.css'],
+      options: {
+        csslintrc: '.csslintrc'
+      }
+    },
+
     cssmin: {
       combine: {
         files: {
@@ -69,15 +81,11 @@ module.exports = function(grunt) {
   });
 
   // Load the plugins
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-concurrent');
-  grunt.loadNpmTasks('grunt-nodemon');
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   // Default task(s).
-  grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);
+  grunt.registerTask('validate', ['jshint', 'csslint']);
+  grunt.registerTask('build', ['validate', 'concat', 'uglify', 'cssmin']);
   grunt.registerTask('server',  ['nodemon']);
   grunt.registerTask('default', ['build', 'server']);
 
