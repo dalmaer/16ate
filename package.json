@@ -1,10 +1,10 @@
 {
   "name": "16ate",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The main fasting app behind 16ate.com",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "grunt server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,7 +23,10 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-uglify": "~0.2.4",
-    "grunt-contrib-concat": "~0.3.0"
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-concurrent": "~0.3.1",
+    "grunt-nodemon": "~0.1.1"
   },
   "dependencies": {
     "hapi": "~1.10.0",
@@ -31,6 +34,6 @@
   },
   "engines": {
     "node": "0.10.x",
-    "npm":  "1.2.x"
+    "npm": "1.2.x"
   }
 }

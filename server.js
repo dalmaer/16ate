@@ -27,7 +27,10 @@ server.route([{
   method: 'GET',
   path: '/',
   handler: function(request) {
-    request.reply.view('index.html', { version: appVersion });
+    request.reply.view('index.html', {
+      version: appVersion,
+      development: process.env['NODE_ENV'] !== "production"
+    });
   }
 }, {
   method: 'GET',

@@ -37,9 +37,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{uurl 'components/bootstrap/dist/css/bootstrap.css'}}" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="{{uurl 'app.css'}}" rel="stylesheet">
+
     <script>
       document.documentElement.className = document.documentElement.className.replace(/(^|\s)no-js(\s|$)/, '$1js$2');
     </script>
@@ -129,14 +129,18 @@
 
       <div id="footer">
         <p><strong>16:8</strong>. The fasting ratio of champions.</p>
-        <p id="version">Serving version {{ version }}</p>
+        <p id="version">Serving version {{ version }} {{#if development}}(dev mode){{/if}}</p>
       </div>
 
     </div> <!-- /content -->
 
+    {{#if development}}
     <script src="{{uurl 'components/bootstrap/assets/js/jquery.js'}}"></script>
     <script src="{{uurl 'components/bootstrap/dist/js/bootstrap.min.js'}}"></script>
     <script src="{{uurl 'components/moment/min/moment.min.js'}}"></script>
     <script src="{{uurl 'app.js'}}"></script>
+    {{else}}
+    <script src="{{uurl 'static/js/16ate.min.js'}}"></script>
+    {{/if}}
   </body>
 </html>
