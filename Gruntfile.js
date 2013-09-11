@@ -33,14 +33,14 @@ module.exports = function(grunt) {
     cssmin: {
       combine: {
         files: {
-          'static/css/16ate.css': ['app.css', 'components/bootstrap/dist/css/bootstrap.css']
+          'static/css/16ate.css': ['components/bootstrap/dist/css/bootstrap.css', 'app.css']
         }
       }
     },
 
     watch: {
       cssmin: {
-        files: ['app.css', 'components/bootstrap/dist/css/bootstrap.css'],
+        files: ['components/bootstrap/dist/css/bootstrap.css', 'app.css'],
         tasks: ['cssmin']
       }
     },
