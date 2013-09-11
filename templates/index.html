@@ -134,13 +134,13 @@
 
     </div> <!-- /content -->
 
-    {{#if development}}
+  {{#if development}}
     <script src="{{uurl 'components/bootstrap/assets/js/jquery.js'}}"></script>
-    <script src="{{uurl 'components/bootstrap/dist/js/bootstrap.min.js'}}"></script>
-    <script src="{{uurl 'components/moment/min/moment.min.js'}}"></script>
+    <script src="{{uurl 'components/bootstrap/dist/js/bootstrap.js'}}"></script>
+    <script src="{{uurl 'components/moment/moment.js'}}"></script>
     <script src="{{uurl 'app.js'}}"></script>
-    {{else}}
+  {{else}}
     <script src="{{uurl 'static/js/16ate.min.js'}}"></script>
-    {{/if}}
+  {{/if}}
   </body>
 </html>
