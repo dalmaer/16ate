@@ -30,6 +30,21 @@ module.exports = function(grunt) {
       }
     },
 
+    cssmin: {
+      combine: {
+        files: {
+          'static/css/16ate.css': ['app.css', 'components/bootstrap/dist/css/bootstrap.css']
+        }
+      }
+    },
+
+    watch: {
+      cssmin: {
+        files: ['app.css', 'components/bootstrap/dist/css/bootstrap.css'],
+        tasks: ['cssmin']
+      }
+    },
+
     nodemon: {
       dev: {
         options: {
@@ -57,11 +72,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
 
   // Default task(s).
-  grunt.registerTask('default', ['concat', 'uglify']);
+  grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);
   grunt.registerTask('server',  ['nodemon']);
+  grunt.registerTask('default', ['build', 'server']);
 
 };

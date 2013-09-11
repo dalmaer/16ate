@@ -35,10 +35,12 @@
              and (-webkit-device-pixel-ratio: 2)"
           rel="apple-touch-startup-image">
 
-    <!-- Bootstrap core CSS -->
+  {{#if development}}
     <link href="{{uurl 'components/bootstrap/dist/css/bootstrap.css'}}" rel="stylesheet">
-    <!-- Custom styles for this template -->
     <link href="{{uurl 'app.css'}}" rel="stylesheet">
+  {{else}}
+    <link href="{{uurl 'static/css/16ate.css'}}" rel="stylesheet">
+  {{/if}}
 
     <script>
       document.documentElement.className = document.documentElement.className.replace(/(^|\s)no-js(\s|$)/, '$1js$2');
