@@ -4,6 +4,7 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
 
+    # JavaScript related tasks
     concat:
       options:
         separator: ';'
@@ -14,7 +15,7 @@ module.exports = (grunt) ->
           'components/moment/moment.js',
           'app.js'
         ]
-        dest: 'static/js/<%= pkg.name %>.js'
+        dest: 'build/js/<%= pkg.name %>.js'
 
     uglify:
       options:
@@ -27,6 +28,7 @@ module.exports = (grunt) ->
       all: ['*.js']
       jshintrc: '.jshintrc'
 
+    # CSS related tasks
     csslint:
       src: ['app.css']
       options:
@@ -37,6 +39,7 @@ module.exports = (grunt) ->
         files:
           'static/css/16ate.css': ['components/bootstrap/dist/css/bootstrap.css', 'app.css']
 
+    # Watch over me
     watch:
       cssmin:
         files: ['components/bootstrap/dist/css/bootstrap.css', 'app.css']
@@ -47,6 +50,7 @@ module.exports = (grunt) ->
         options:
           ignoredFiles: [
             'app.js',
+            'build/**',
             'components/**',
             'node_modules/**'
           ]

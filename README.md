@@ -48,3 +48,10 @@ TBH
 ## Branches
 
 TBH
+
+## Directory Structure
+
+- build: where files temporarily live during build phase (e.g. concat js before min)
+- components: where bower components live
+- static: where files end up to be served
+- templates: where handlebars templates live
