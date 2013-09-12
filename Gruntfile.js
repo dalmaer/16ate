@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-  // Project configuration.
+  // Project configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -83,10 +83,10 @@ module.exports = function(grunt) {
   // Load the plugins
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-  // Default task(s).
+  // Configure the tasks
   grunt.registerTask('validate', ['jshint', 'csslint']);
-  grunt.registerTask('build', ['validate', 'concat', 'uglify', 'cssmin']);
-  grunt.registerTask('server',  ['nodemon']);
-  grunt.registerTask('default', ['build', 'server']);
+  grunt.registerTask('build',    ['validate', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('server',   ['nodemon']);
+  grunt.registerTask('default',  ['build', 'server']);
 
 };
