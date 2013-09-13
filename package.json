@@ -2,7 +2,7 @@
   "name": "16ate",
   "version": "0.0.3",
   "description": "The main fasting app behind 16ate.com",
-  "main": "server.js",
+  "main": "server.coffee",
   "scripts": {
     "start": "grunt server",
     "test": "echo \"Error: no test specified\" && exit 1"
