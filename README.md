@@ -55,3 +55,9 @@ TBH
 - components: where bower components live
 - static: where files end up to be served
 - templates: where handlebars templates live
+
+## Deployment
+
+If you want production mode on remember to (once only)
+
+heroku config:set NODE_ENV=production --app ate16
