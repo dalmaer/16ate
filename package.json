@@ -34,7 +34,8 @@
   },
   "dependencies": {
     "hapi": "~1.10.0",
-    "handlebars": "~1.0.12"
+    "handlebars": "~1.0.12",
+    "coffee-script": "~1.6.3"
   },
   "engines": {
     "node": "0.10.x",
