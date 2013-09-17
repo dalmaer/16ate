@@ -5,7 +5,7 @@
   "main": "server.coffee",
   "scripts": {
     "start": "grunt server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,10 @@
     "grunt-contrib-cssmin": "~0.6.1",
     "matchdep": "~0.1.2",
     "grunt-contrib-csslint": "~0.1.2",
-    "grunt-newer": "~0.5.0"
+    "grunt-newer": "~0.5.0",
+    "mocha": "~1.13.0",
+    "chai": "~1.7.2",
+    "grunt-mocha-cov": "0.0.7"
   },
   "dependencies": {
     "hapi": "~1.10.0",

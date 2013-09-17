@@ -39,6 +39,13 @@ module.exports = (grunt) ->
         files:
           'static/css/16ate.css': ['components/bootstrap/dist/css/bootstrap.css', 'app.css']
 
+    # Testing
+    mochacov:
+      all: ['test/*.coffee']
+      options:
+        reporter: 'spec'
+        require: ['coffee-script']
+
     # Watch over me
     watch:
       cssmin:
@@ -67,5 +74,6 @@ module.exports = (grunt) ->
   # Configure the tasks
   grunt.registerTask 'validate', ['jshint', 'csslint']
   grunt.registerTask 'build',    ['validate', 'concat', 'uglify', 'cssmin']
+  grunt.registerTask 'test',     ['mochacov']
   grunt.registerTask 'server',   ['nodemon']
   grunt.registerTask 'default',  ['build', 'server']
