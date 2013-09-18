@@ -1,3 +1,5 @@
+{ hours, minutes } = require './lib/plural.coffee'
+
 #
 # Time related functionality
 #
@@ -21,20 +23,6 @@ now = ->
     state.now
   else
     moment()
-
-# Take a Number of hours and return the correct string to handle a couple of issues:
-# - "2 hours" vs. "1 hour" (plural)
-# - When getting negative hours (getting past the goal for example) convert to positive as the UI will reflect the difference
-#   e.g. -1 => 1 hour past your goal!
-stringifyHours = (hours) -> stringifyNumber hours, "hour"
-
-stringifyMinutes = (minutes) -> stringifyNumber minutes, "minute"
-
-stringifyNumber = (number, time) ->
-  number = Math.abs(number) # make sure we are positive only
-  returnTime = number + " " + time
-  returnTime = returnTime + "s"  unless number is 1
-  returnTime
 
 # Given a time, find the nearest half an hour and return that time
 # If the hour has more than 30 minutes, add 30 and then it is save to get
@@ -89,7 +77,7 @@ renderEatingState = ->
   idealHours = idealFastTime.diff(now(), "hour")
   $("#mode").html "You are eating"
   $("#laststatus").html "your first meal was at <strong>" + state.time.format("ha") + "</strong>"
-  $("#timemarker").html stringifyHours(idealHours)
+  $("#timemarker").html hours(idealHours)
   $("#eat").html "Start Fasting"
 
   # if the hours is negative it means you have been eating for awhile
@@ -115,11 +103,11 @@ renderFastingState = ->
 
   # If the user has been fasting for a bit, tell them by how much
   if hoursFasting > 0
-    $("#mode").html stringifyHours(hoursFasting) + " fasting"
+    $("#mode").html hours(hoursFasting) + " fasting"
   else
     $("#mode").html "You are fasting"
   $("#laststatus").html "your last meal was at <strong>" + state.time.format("ha") + "</strong>"
-  $("#timemarker").html stringifyHours(hoursUntilGoalEndOfFastTime)
+  $("#timemarker").html hours(hoursUntilGoalEndOfFastTime)
   $("#eat").html "Start Eating"
 
   # if the hours is negative it means you are past your goal!
@@ -133,7 +121,7 @@ renderFastingState = ->
     # if the number of minutes are negative that means you are actually ahead of the goal
     # e.g. if the goal is 11am and it is 11:42, this will return -42
     minutesUntilGoalEndOfFastTime = goalEndOfFastTime.diff(now(), "minutes")
-    $("#timemarker").html stringifyMinutes(minutesUntilGoalEndOfFastTime)
+    $("#timemarker").html minutes(minutesUntilGoalEndOfFastTime)
     if minutesUntilGoalEndOfFastTime < 0
       renderCurrentProgressIndicator "green"
       $("#timeleft").html "past your <em>" + state.goal + " hours</em> goal at <strong>" + goalEndOfFastTime.format("ha") + "</strong>"

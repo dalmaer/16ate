@@ -6,12 +6,12 @@
 # create a namespace to export our public methods
 root = exports ? this
 
-root.hours = (hours) -> @number hours, "hour"
+root.hours = (hours) => number hours, "hour"
 
-root.minutes = (minutes) -> @number minutes, "minute"
+root.minutes = (minutes) => number minutes, "minute"
 
-root.number = (number, time) ->
+root.number = number = (number, time) ->
   number = Math.abs(number) # make sure we are positive only
-  returnTime = number + " " + time
-  returnTime = returnTime + "s"  unless number is 1
+  returnTime = "#{number} #{time}"
+  returnTime = "#{returnTime}s" unless number is 1
   returnTime

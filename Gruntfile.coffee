@@ -4,12 +4,19 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
 
-    # JavaScript related tasks
-    coffee:
-      compile:
-        files:
-          'build/js/app.js': 'app.coffee'
+    #
+    # Scripting related tasks
+    #
 
+    # Take the main app entry point and the CoffeeScript library and output one app.js
+    browserify:
+      dist:
+        files:
+          'build/js/app.js': ['app.coffee', 'lib/*.coffee']
+      options:
+        transform: ['coffeeify']
+
+    # Join the vendor libraries to the app.js to create one large JS
     concat:
       options:
         separator: ';'
@@ -22,16 +29,15 @@ module.exports = (grunt) ->
         ]
         dest: 'build/js/<%= pkg.name %>.js'
 
+    # Minify and compress the concat output to create the final minified JS
     uglify:
       options:
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+        compress:
+          dead_code: true
       dist:
         files:
           'static/js/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
-
-    jshint:
-      all: ['*.js']
-      jshintrc: '.jshintrc'
 
     # CSS related tasks
     csslint:
@@ -77,8 +83,8 @@ module.exports = (grunt) ->
   require('matchdep').filterDev('grunt-*').forEach grunt.loadNpmTasks
 
   # Configure the tasks
-  grunt.registerTask 'validate', ['jshint', 'csslint']
-  grunt.registerTask 'build',    ['validate', 'coffee', 'concat', 'uglify', 'cssmin']
+  grunt.registerTask 'validate', ['csslint']
+  grunt.registerTask 'build',    ['validate', 'browserify', 'concat', 'uglify', 'cssmin']
   grunt.registerTask 'test',     ['mochacov']
   grunt.registerTask 'server',   ['nodemon']
   grunt.registerTask 'default',  ['build', 'server']
