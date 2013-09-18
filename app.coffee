@@ -15,11 +15,12 @@ idealNumberOfEatingHoursPerDay = -> 24 - state.goal
 #      $past.diff($future) = negative amount
 hoursInThisState = -> now().diff state.time, "hours"
 
+fasting = -> state.period is "fasting"
 
 # Sneak a peak at state.now to see if in debug mode the notion of "now" is hijacked
 now = ->
   # Defensive as this is called very early on
-  if (state isnt null) and ("now" of state)
+  if state?.now?
     state.now
   else
     moment()
@@ -106,6 +107,7 @@ renderFastingState = ->
     $("#mode").html hours(hoursFasting) + " fasting"
   else
     $("#mode").html "You are fasting"
+
   $("#laststatus").html "your last meal was at <strong>" + state.time.format("ha") + "</strong>"
   $("#timemarker").html hours(hoursUntilGoalEndOfFastTime)
   $("#eat").html "Start Eating"
@@ -197,7 +199,6 @@ clearClasses = (el, classNames) ->
 #
 # Storage / State Management
 #
-fasting = -> state.period is "fasting"
 
 saveState = ->
   if localStorageWorks
@@ -210,8 +211,8 @@ readState = ->
   # localStorage.removeItem("state");
   # return;
   if localStorageWorks
-    read = JSON.parse(localStorage.getItem("state"))
-    read.time = moment(read.time) if read isnt null and "time" of read # convert the time back to a moment object
+    read = JSON.parse localStorage.getItem("state")
+    read.time = moment(read.time) if read?.time? # convert the time back to a moment object
     read
   else
     window.globalState
@@ -240,7 +241,7 @@ localStorageWorks = do ->
 $(document).ready ->
   state = readState()
 
-  if (state isnt null) and ("goal" of state)
+  if state?.goal?
     render()
     setInterval render, 1000 * 60
   else
@@ -284,6 +285,4 @@ $(document).ready ->
 
   $("#header").click (e) ->
     hideAddressBar()
-
-
 
