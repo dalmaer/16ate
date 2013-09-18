@@ -36,7 +36,8 @@
     "grunt-mocha-cov": "0.0.7",
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-browserify": "~1.2.4",
-    "coffeeify": "~0.5.1"
+    "coffeeify": "~0.5.1",
+    "grunt-contrib-stylus": "~0.8.0"
   },
   "dependencies": {
     "hapi": "~1.10.0",

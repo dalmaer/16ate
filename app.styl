@@ -1,0 +1,145 @@
+/*
+ * Variables
+ */
+
+h1
+  font-size 64px
+
+/*
+ * Custom ID and classes
+ */
+
+#header
+  position fixed
+  width 100%
+
+#content
+  position relative
+  top 80px
+
+#alert
+  display none
+  margin 20px 20px 0 20px
+  text-align center
+
+#timemarker
+  text-align center
+
+#message
+  margin 0
+  padding 10px 4px 40px 4px
+
+#mode
+  color #fff
+  font-size 2em
+
+#laststatus
+  color rgb(153, 153, 153)
+  padding-bottom: 10px
+
+#laststatus strong
+  color #eee
+
+@media only screen and (max-device-width:480px)
+  /* hide the logo on the small screen */
+  #logo
+    display none
+
+#logo
+  position absolute
+  float left
+  color #fff
+  padding-top 12px
+
+#logo:hover
+  text-decoration none
+
+#logo:hover span
+  color #fff
+
+#sixteen
+  font-size 42px
+  color #fff
+
+#eight
+  color rgb(153, 153, 153)
+
+#history
+  position relative
+  overflow hidden
+  top 0
+  height 2em
+  margin 0
+  padding 0
+  width 100%
+  text-align center
+  border-radius 0
+  background-color #449d44 /* default to green */
+  box-shadow 0 3px 2px 0 rgba(0,0,0, 0.2)
+
+#welcome h4
+  margin-top 1em
+
+#firstfast
+  margin-top 1.4em
+  margin-bottom 1.4em
+
+/* The history days */
+#day1, #day2, #day3, #day4, #day5, #day6, #day7
+  width 14% /* doesn't add up to 100% on purpose, leaving room for a bit of today */
+
+/* General Shared Styles */
+.green
+  color #449d44
+
+.yellow
+  color #ec971f
+
+.red
+  color #c9302c
+
+.center-button
+  display block
+  margin 0 auto
+
+.settings
+  margin-top 3em
+
+#footer
+  margin-top 2em
+  padding 1em
+  font-style italic
+  border-top rgba(221,221,221, 0.6) 1px solid
+  background-color rgb(245, 245, 245)
+
+#version
+  text-align right
+
+/*
+ * Turn off the welcome to stop the flash
+ */
+.js
+  #welcome
+    display none
+
+  #info
+    display block
+
+/*
+ * Enhance Twitter Bootstrap Classes
+ */
+
+.navbar-brand
+  width 100%
+  color white
+
+/* only shunt over if the logo isn't there */
+@media not (max-device-width:480px)
+  .navbar-header
+    margin-left 60px
+
+.navbar
+  box-shadow 0 3px 2px 0 rgba(0,0,0, 0.2)
+
+.progress-bar
+  padding-top 6px

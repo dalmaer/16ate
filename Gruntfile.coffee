@@ -40,15 +40,15 @@ module.exports = (grunt) ->
           'static/js/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
 
     # CSS related tasks
-    csslint:
-      src: ['app.css']
-      options:
-        csslintrc: '.csslintrc'
+    stylus:
+      compile:
+        files:
+          'build/css/app.css': 'app.styl'
 
     cssmin:
       combine:
         files:
-          'static/css/16ate.css': ['components/bootstrap/dist/css/bootstrap.css', 'app.css']
+          'static/css/16ate.css': ['components/bootstrap/dist/css/bootstrap.css', 'build/css/app.css']
 
     # Testing
     mochacov:
@@ -60,7 +60,7 @@ module.exports = (grunt) ->
     # Watch over me
     watch:
       cssmin:
-        files: ['components/bootstrap/dist/css/bootstrap.css', 'app.css']
+        files: ['components/bootstrap/dist/css/bootstrap.css', 'build/css/app.css']
         tasks: ['cssmin']
 
     nodemon:
@@ -83,8 +83,7 @@ module.exports = (grunt) ->
   require('matchdep').filterDev('grunt-*').forEach grunt.loadNpmTasks
 
   # Configure the tasks
-  grunt.registerTask 'validate', ['csslint']
-  grunt.registerTask 'build',    ['validate', 'browserify', 'concat', 'uglify', 'cssmin']
+  grunt.registerTask 'build',    ['browserify', 'concat', 'uglify', 'stylus', 'cssmin']
   grunt.registerTask 'test',     ['mochacov']
   grunt.registerTask 'server',   ['nodemon']
   grunt.registerTask 'default',  ['build', 'server']
