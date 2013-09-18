@@ -5,6 +5,11 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON('package.json')
 
     # JavaScript related tasks
+    coffee:
+      compile:
+        files:
+          'build/js/app.js': 'app.coffee'
+
     concat:
       options:
         separator: ';'
@@ -13,7 +18,7 @@ module.exports = (grunt) ->
           'components/bootstrap/assets/js/jquery.js',
           'components/bootstrap/dist/js/bootstrap.js',
           'components/moment/moment.js',
-          'app.js'
+          'build/js/app.js'
         ]
         dest: 'build/js/<%= pkg.name %>.js'
 
@@ -73,7 +78,7 @@ module.exports = (grunt) ->
 
   # Configure the tasks
   grunt.registerTask 'validate', ['jshint', 'csslint']
-  grunt.registerTask 'build',    ['validate', 'concat', 'uglify', 'cssmin']
+  grunt.registerTask 'build',    ['validate', 'coffee', 'concat', 'uglify', 'cssmin']
   grunt.registerTask 'test',     ['mochacov']
   grunt.registerTask 'server',   ['nodemon']
   grunt.registerTask 'default',  ['build', 'server']
