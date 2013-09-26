@@ -2,6 +2,17 @@
  * Variables
  */
 
+/* Colors */
+$grey = rgb(153, 153, 153)
+$white = #fff
+$green = #449d44
+$yellow = #ec971f
+$red = #c9302c
+
+/*
+ * Tags
+ */
+
 h1
   font-size 64px
 
@@ -30,12 +41,12 @@ h1
   padding 10px 4px 40px 4px
 
 #mode
-  color #fff
+  color $white
   font-size 2em
 
 #laststatus
-  color rgb(153, 153, 153)
-  padding-bottom: 10px
+  color $grey
+  padding-bottom 10px
 
 #laststatus strong
   color #eee
@@ -48,18 +59,18 @@ h1
 #logo
   position absolute
   float left
-  color #fff
+  color $white
   padding-top 12px
 
 #logo:hover
   text-decoration none
 
 #logo:hover span
-  color #fff
+  color $white
 
 #sixteen
   font-size 42px
-  color #fff
+  color $white
 
 #eight
   color rgb(153, 153, 153)
@@ -74,7 +85,7 @@ h1
   width 100%
   text-align center
   border-radius 0
-  background-color #449d44 /* default to green */
+  background-color $green /* default to green */
   box-shadow 0 3px 2px 0 rgba(0,0,0, 0.2)
 
 #welcome h4
@@ -90,13 +101,13 @@ h1
 
 /* General Shared Styles */
 .green
-  color #449d44
+  color $green
 
 .yellow
-  color #ec971f
+  color $yellow
 
 .red
-  color #c9302c
+  color $red
 
 .center-button
   display block
